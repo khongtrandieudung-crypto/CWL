@@ -314,3 +314,30 @@ function heart(t){
     x:16*Math.pow(Math.sin(t),3),
     y:-(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t))
   };
+}
+function launch(){
+  if(!document.getElementById("p14").classList.contains("active"))return;
+  for(let i=0;i<120;i++){
+    const t=Math.random()*Math.PI*2,h=heart(t);
+    ps.push({x:c.width/2,y:200,vx:h.x*.15,vy:h.y*.15,a:1});
+  }
+}
+function anim(){
+  ctx.clearRect(0,0,c.width,c.height);
+  ps.forEach((p,i)=>{
+    p.x+=p.vx;p.y+=p.vy;p.a-=.012;
+    ctx.globalAlpha=p.a;
+    ctx.fillStyle="#ff6f91";
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,2.2,0,7);
+    ctx.fill();
+    if(p.a<=0) ps.splice(i,1);
+  });
+  requestAnimationFrame(anim);
+}
+anim();
+setInterval(launch,1400);
+</script>
+
+</body>
+</html>
